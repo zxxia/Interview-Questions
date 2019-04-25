@@ -1,20 +1,18 @@
-# Conceptual Questions
-* Deep Copy vs Shallow Copy?  
-Shallow Copy:  
-  - The variables A and B refer to different areas of memory, when B
-is assigned to A the two variables refer to the same area of memory. Later 
-modifications to the contents of either are instantly reflected in the contents 
-of other, as they share contents.   
-
-  Deep Copy:  
-  - Deep copies duplicate everything. A deep copy of a collection is two 
-collections with all of the elements in the original collection duplicated.
-
-* HashTable vs HashMap? How to design hash table?  
-in java, hash table is synchronized and hash map is not synchronized
 ## C++ Questions
-* Virtual function? Pure virtual function?
-* Overloading vs Overriding
+* Virtual function vs Pure virtual function  
+The main difference between ‘virtual function’ and ‘pure virtual function’ is 
+that ‘virtual function’ has its definition in the base class and also the 
+inheriting derived classes redefine it. The pure virtual function has no 
+definition in the base class, and all the inheriting derived classes has to 
+redefine it.  
+* Overloading vs Overriding  
+Overloading occurs when two or more methods in one class have the same method 
+name but different parameters.  
+Overriding means having two methods with the same method name and parameters 
+(i.e., method signature). One of the methods is in the parent class and the 
+other is in the child class. Overriding allows a child class to provide a 
+specific implementation of a method that is already provided its parent class.
+* What new feature in C++11?  
 
 ## Golang Questions
 * Implment a timer in golang  
@@ -305,14 +303,94 @@ Four Principles:
 
 
 # Coding Questions
-1. The longest path of binary tree
-2. Mirror a binary tree
-3. Longest Common Substring
-4. Check out common sorting algorithms, quick sort
-5. Delete repeated elements in a single linked list
-6. How to check prime number
-7. How to check loop in linked list
-8. Convert BST to circular doubly linked list  
+* The longest path of binary tree
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    int ans;
+    int depth(TreeNode* root) {
+        if (root == NULL) {
+            return 0;
+        }
+        int left_depth = depth(root->left);
+        int right_depth = depth(root->right);
+        ans = max(left_depth + right_depth + 1, ans);
+        return max(left_depth, right_depth) + 1;
+    }
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        ans = 1;
+        depth(root);
+        return ans-1;
+    }
+};
+```
+* Mirror a binary tree
+```c++
+struct TreeNode {
+	TreeNode *left;
+	TreeNode *right;
+	int val;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+}
+```
+* Longest Common Substring
+* Common sorting algorithms, quick sort
+
+```c
+void selectionSort(int array[], int n) {
+	int i, j, min_idx;
+	
+}
+```
+
+```c
+int partrition(int arr[], int start, int end) {
+	int p_index, pivot, i;
+	pivot = arr[end];
+	p_index = start;
+	for (i = start; i < end; i++) {
+		if (arr[i] <= pivot) {
+			swap_int (&arr[i], &arr[p_index]);
+			p_index++;
+		}
+	}
+	swap_int(&arr[end], &arr[p_index]);
+	return p_index;
+}
+
+void quickSort (int arr[], int start, int end) {
+	if (start < end) {
+  		int p = partrition (arr, start, end);
+  	  	quickSort(arr, start, p - 1);
+  	  	quickSort(arr, p + 1, end);
+  	}
+}
+```
+* Delete repeated elements in a single linked list
+* How to check prime number
+
+```c
+bool isPrime(int n) {
+	for (int i = 2; i < n/2; ++i) {
+		if (n%i == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+```
+* How to check loop in linked list
+* Convert BST to circular doubly linked list  
 
 ```c++
 TreeNode* prev;
@@ -330,12 +408,13 @@ TreeNode* bstToSortedDll(TreeNode* root) {
         head = root;
     }
     prev = root;
-
     TreeNode* right = root->right;
     // two lines below for the formation of circle
     head->left = root;
     root->right = head;
-
     bstToSortedDll(right);
 }
 ```
+
+* Longest Substring without Repeating characters
+* Minimum Number of Jumps to Reach End 
